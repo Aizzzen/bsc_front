@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import {useEffect, useState} from "react";
+import {connect, getBalance, getOwner} from "./bsc-connect";
 
-function App() {
+const App = () => {
+  const [balance, setBalance] = useState(5)
+  const [owner, setOwner] = useState("0x000000")
+  const [URI, setURI] = useState("yhuihiulhsdbi")
+
+  const fetchBalance = () => {
+    getBalance()
+        .then(balance => setBalance(balance))
+        .catch(e => console.log(e))
+  }
+
+  const fetchOwner = () => {
+      getOwner()
+          .then(owner => setOwner(owner))
+          .catch(e => console.log(e))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div>
+            <button onClick={() => fetchBalance()}>balanceOf</button>
+            <p>Your balance: {balance}</p>
+        </div>
+        <div>
+            <button onClick={() => fetchOwner()}>ownerOf</button>
+            <p>Owner: {owner}</p>
+        </div>
+        <div>
+            <button>tokenURI</button>
+            <p>URI: {URI}</p>
+        </div>
     </div>
   );
 }
