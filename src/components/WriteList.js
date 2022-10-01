@@ -33,25 +33,25 @@ const WriteList = () => {
     }
 
     return (
-        <div>
-            <div>
-                <button onClick={() => fetchBuyTokens()}>buyTokens</button>
+        <div className='blocks'>
+            <div className='block'>
                 <input type="text"/>
+                <button onClick={() => fetchBuyTokens()}>buyTokens</button>
                 <p></p>
             </div>
-            <div>
-                <button onClick={() => fetchMinting(mintedTokens)}>mintTokens</button>
+            <div className='block'>
                 <input type="number" onChange={(e) => setMintedTokens(e.target.value)}/>
+                <button onClick={() => fetchMinting(mintedTokens)}>mintTokens</button>
                 <p></p>
             </div>
-            <div>
-                <button onClick={() => fetchSetPrice(priceValue)}>setPrice</button>
+            <div className='block'>
                 <input type="text" onChange={(e) => setPriceValue(e.target.value)}/>
+                <button onClick={() => fetchSetPrice(priceValue)}>setPrice</button>
                 <p>Price: {price}</p>
             </div>
-            <div>
-                <button>TransferFrom</button>
+            <div className='block'>
                 <input type="text"/>
+                <button>TransferFrom</button>
                 <p></p>
             </div>
         </div>

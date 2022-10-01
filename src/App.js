@@ -1,4 +1,5 @@
 import {useState} from "react";
+import './App.scss';
 import ReadList from "./components/ReadList";
 import WriteList from "./components/WriteList";
 
@@ -11,8 +12,10 @@ const App = () => {
 
   return (
     <div className="App">
-        <button onClick={() => changeView("read")}>Read</button>
-        <button onClick={() => changeView("write")}>Write</button>
+        <div className="buttons">
+            <button onClick={() => changeView("read")}>Read</button>
+            <button onClick={() => changeView("write")}>Write</button>
+        </div>
         {view === "read" ? <ReadList/> : <WriteList/>}
     </div>
   );
