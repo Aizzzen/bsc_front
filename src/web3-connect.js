@@ -7,6 +7,7 @@ let account
 let contract
 let initialized = false
 
+// Connection to Metamask
 export const connect = async () => {
     if(typeof provider !== "undefined") {
         provider
@@ -26,6 +27,7 @@ export const connect = async () => {
     initialized = true
 }
 
+// Read Contract Functions
 export const getBalance = async (address) => {
     if (!initialized) {
         await connect()
@@ -48,7 +50,7 @@ export const getTokenURI = async (tokenId) => {
     if (!initialized) {
         await connect()
     }
-    return contract.methods.tokenURI("_" + `${tokenId}`).call()
+    return contract.methods.tokenURI(tokenId).call()
 }
 
 export const getTokenPrice = async () => {
@@ -58,6 +60,7 @@ export const getTokenPrice = async () => {
     return contract.methods.price().call()
 }
 
+// Write Contract Functions
 export const mintTokensFunc = async (tokens) => {
     if (!initialized) {
         await connect()
@@ -70,4 +73,11 @@ export const setTokenPrice = async (price) => {
         await connect()
     }
     return contract.methods.setPrice(price).call()
+}
+
+export const buyTokensFunc = async (amount, to) => {
+    if (!initialized) {
+        await connect()
+    }
+    return contract.methods.buyTokens(amount, to).call()
 }

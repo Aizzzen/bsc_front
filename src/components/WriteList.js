@@ -17,6 +17,14 @@ const WriteList = () => {
 
     const fetchMinting = (tokens) => {
         mintTokensFunc(tokens)
+            .then(res => console.log(res))
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
+    const fetchBuyTokens = (amount, to) => {
+        mintTokensFunc(amount, to)
             .then(price => setPrice(price))
             .catch(e => {
                 setPrice("Error?")
@@ -27,7 +35,7 @@ const WriteList = () => {
     return (
         <div>
             <div>
-                <button>buyTokens</button>
+                <button onClick={() => fetchBuyTokens()}>buyTokens</button>
                 <input type="text"/>
                 <p></p>
             </div>
