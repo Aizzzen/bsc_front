@@ -50,3 +50,24 @@ export const getTokenURI = async (tokenId) => {
     }
     return contract.methods.tokenURI("_" + `${tokenId}`).call()
 }
+
+export const getTokenPrice = async () => {
+    if (!initialized) {
+        await connect()
+    }
+    return contract.methods.price().call()
+}
+
+export const mintTokensFunc = async (tokens) => {
+    if (!initialized) {
+        await connect()
+    }
+    return contract.methods.mintTokens(account, tokens).send({from: account})
+}
+
+export const setTokenPrice = async (price) => {
+    if (!initialized) {
+        await connect()
+    }
+    return contract.methods.setPrice(price).call()
+}

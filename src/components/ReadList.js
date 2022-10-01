@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {getBalance, getOwner, getTokenURI} from "../web3-connect";
+import {getBalance, getOwner, getTokenPrice, getTokenURI} from "../web3-connect";
 
 const ReadList = () => {
     const [balanceValue, setBalanceValue] = useState("")
@@ -10,6 +10,8 @@ const ReadList = () => {
 
     const [URIValue, setURIValue] = useState("")
     const [URI, setURI] = useState("")
+
+    const [price, setPrice] = useState("")
 
     const fetchBalance = (address) => {
         getBalance(address)
@@ -38,6 +40,15 @@ const ReadList = () => {
             })
     }
 
+    const fetchPrice = () => {
+        getTokenPrice()
+            .then(price => setPrice(price))
+            .catch(e => {
+                setPrice("Error: something went wrong")
+                console.log(e)
+            })
+    }
+
     return (
         <div>
             <div>
@@ -54,6 +65,10 @@ const ReadList = () => {
                 <button onClick={() => fetchURI(URIValue)}>tokenURI</button>
                 <input type="text" onChange={(e) => setURIValue(e.target.value)}/>
                 <p>URI: {URI}</p>
+            </div>
+            <div>
+                <button onClick={() => fetchPrice()}>Price</button>
+                <p>Price: {price}</p>
             </div>
         </div>
     );
