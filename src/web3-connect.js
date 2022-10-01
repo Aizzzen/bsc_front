@@ -3,7 +3,6 @@ import abi from './abi.json';
 
 let provider = window.ethereum
 let web3
-
 let account
 let contract
 let initialized = false
@@ -12,27 +11,18 @@ export const connect = async () => {
     if(typeof provider !== "undefined") {
         provider
             .request({method: "eth_requestAccounts"})
-            .then(accounts => {
-                account = accounts[0]
-                console.log(account)
-            })
+            .then(accounts => account = accounts[0])
             .catch(e => console.log(e))
         window.ethereum.on("accountsChanged", function (accounts) {
             account = accounts[0]
-            console.log(account)
         })
     }
-
     web3 = new Web3(provider)
-
     const networkId = await web3.eth.net.getId()
-
-    // contract = new web3.eth.Contract(
-    //     abi,
-    //     "0xF47955e9e3a1712D9e3Ec0E91593e1FA6D09E22e"
-    // )
-
-    console.log(contract)
+    contract = new web3.eth.Contract(
+        abi,
+        "0xF47955e9e3a1712D9e3Ec0E91593e1FA6D09E22e"
+    )
     initialized = true
 }
 
