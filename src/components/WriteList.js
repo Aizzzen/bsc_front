@@ -1,22 +1,31 @@
 import React, {useState} from 'react';
-import {buyTokensFunc, mintTokensFunc, setTokenPrice, transferFromFunc} from "../web3-connect";
+import {
+    buyTokensFunc,
+    mintTokensFunc,
+    setTokenPrice,
+    transferFromFunc
+} from "../web3-connect";
+import Form from "./Form";
 
 const WriteList = () => {
-    const [priceValue, setPriceValue] = useState("")
     const [price, setPrice] = useState("")
-    const [mintedTokens, setMintedTokens] = useState(0)
     // const [amountValue, setAmount] = useState(0)
-    const [toValue, setTo] = useState("")
-    const [transferFrom, setTransferFrom] = useState("")
-    const [transferTo, setTransferTo] = useState("")
-    const [transferTokenId, setTransferTokenId] = useState("")
+    // const [toValue, setTo] = useState("")
+
+    // const fetchBuyTokens = (to) => {
+    //     buyTokensFunc(to)
+    //         .then(res => console.log(res))
+    //         .catch(e => {
+    //             console.log(e)
+    //         })
+    // }
 
     const fetchSetPrice = (newPrice) => {
         setTokenPrice(newPrice)
             .then(price => setPrice(price))
             .catch(e => {
                 setPrice("Only owner can change price")
-                console.log(e)
+                console.log("Error message: " + e)
             })
     }
 
@@ -24,15 +33,7 @@ const WriteList = () => {
         mintTokensFunc(tokens)
             .then(res => console.log(res))
             .catch(e => {
-                console.log(e)
-            })
-    }
-
-    const fetchBuyTokens = (to) => {
-        buyTokensFunc(to)
-            .then(res => console.log(res))
-            .catch(e => {
-                console.log(e)
+                console.log("Error message: " + e)
             })
     }
 
@@ -40,44 +41,52 @@ const WriteList = () => {
         transferFromFunc(from, to, tokenId)
             .then(res => console.log(res))
             .catch(e => {
-                console.log(e)
+                console.log("Error message: " + e)
             })
     }
 
     return (
         <div className='blocks'>
-            <div className='block'>
-                {/*<input type="number" onChange={(e) => setAmount(e.target.value)}/>*/}
-                <input type="text" onChange={(e) => setTo(e.target.value)}/>
-                <button onClick={() => fetchBuyTokens(toValue)}>buyTokens</button>
-                <p>{}</p>
-            </div>
-            <div className='block'>
-                <input type="number" onChange={(e) => setMintedTokens(e.target.value)}/>
-                <button onClick={() => fetchMinting(mintedTokens)}>mintTokens</button>
-                <p></p>
-            </div>
-            <div className='block'>
-                <input type="text" onChange={(e) => setPriceValue(e.target.value)}/>
-                <button onClick={() => fetchSetPrice(priceValue)}>setPrice</button>
-                <p>Price: {price}</p>
-            </div>
-            <div className='block'>
-                <input type="text" onChange={(e) => setTransferFrom(e.target.value)}/>
-                <input type="text" onChange={(e) => setTransferTo(e.target.value)}/>
-                <input type="text" onChange={(e) => setTransferTokenId(e.target.value)}/>
-                <button onClick={() => fetchTransferFrom(transferFrom, transferTo, transferTokenId)}>TransferFrom</button>
-                <p></p>
-            </div>
+            {/*<div className='block'>*/}
+            {/*    <input type="number" onChange={(e) => setAmount(e.target.value)}/>*/}
+            {/*    <input type="text" onChange={(e) => setTo(e.target.value)}/>*/}
+            {/*    <button onClick={() => fetchBuyTokens(amountValue, toValue)}>buyTokens</button>*/}
+            {/*    <p>{}</p>*/}
+            {/*</div>*/}
+            <Form
+                header="mintTokens"
+                func={fetchMinting}
+                placeholder="amount"
+                isInput={1}
+                textValue={false}
+                button="Write"
+            />
+            <Form
+                header="setPrice"
+                func={fetchSetPrice}
+                placeholder="price"
+                text="Price"
+                value={price}
+                isInput={1}
+                textValue={true}
+                button="Write"
+            />
+            <Form
+                header="transferFrom"
+                func={fetchTransferFrom}
+                placeholder={
+                    {
+                        1: 'from',
+                        2: 'to',
+                        3: 'tokenId',
+                    }
+                }
+                isInput={3}
+                textValue={false}
+                button="Write"
+            />
         </div>
     );
 };
 
 export default WriteList;
-
-
-// <div>
-//     <button onClick={() => fetchBalance(balanceValue)}>balanceOf</button>
-//     <input type="text" onChange={(e) => setBalanceValue(e.target.value)}/>
-//     <p>Your balance: {balance}</p>
-// </div>

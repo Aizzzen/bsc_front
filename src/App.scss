@@ -30,11 +30,12 @@
         width: 50%;
         min-height: 30px;
         margin: 20px 0;
-        padding: 5px;
+        padding: 15px;
         border-radius: 8px;
         border: 1px solid #a3a8ab;
         .header {
             font-weight: 700;
+            cursor: pointer;
             &:hover {
                 color: #9a9b9a
             }
@@ -51,7 +52,7 @@
             }
         }
         button {
-            width: 22%;
+            width: 15%;
             height: 25px;
             font-size: 15px;
             color: white;
