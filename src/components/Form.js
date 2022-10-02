@@ -1,13 +1,27 @@
 import React, {useState} from 'react';
 
 const Form = ({clickFunction, text, formName}) => {
-    const [value, setValue] = useState("")
+    const [clicked, setClicked] = useState(false)
     const [inputValue, setInputValue] = useState("")
+
+    const changeVisibility = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setClicked(!clicked)
+        console.log(e)
+    }
     return (
         <div>
-            <button onClick={() => clickFunction(inputValue)}>{formName}</button>
-            <input type="text" onChange={(e) => setInputValue(e.target.value)}/>
-            <p>{text}: {value}</p>
+            <div onClick={(e) => changeVisibility(e)} className='header'>
+                balanceOf
+            </div>
+            {clicked &&
+            <>
+                <input type="text" onChange={(e) => setInputValue(e.target.value)}/>
+                <button onClick={() => fetchBalance(inputValue)}>Query</button>
+                <p>Your balance: {balance}</p>
+            </>
+            }
         </div>
     );
 };

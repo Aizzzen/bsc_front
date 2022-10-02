@@ -75,9 +75,16 @@ export const setTokenPrice = async (price) => {
     return contract.methods.setPrice(price).call()
 }
 
-export const buyTokensFunc = async (amount, to) => {
+export const buyTokensFunc = async (to) => {
     if (!initialized) {
         await connect()
     }
-    return contract.methods.buyTokens(amount, to).call()
+    return contract.methods.buyTokens(to).send({from: account})
+}
+
+export const transferFromFunc = async (from, to, tokenId) => {
+    if (!initialized) {
+        await connect()
+    }
+    return contract.methods.transferFrom(from, to, tokenId).send({from: account})
 }

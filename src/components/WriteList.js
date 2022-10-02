@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
-import {mintTokensFunc, setTokenPrice} from "../web3-connect";
+import {buyTokensFunc, mintTokensFunc, setTokenPrice, transferFromFunc} from "../web3-connect";
 
 const WriteList = () => {
     const [priceValue, setPriceValue] = useState("")
     const [price, setPrice] = useState("")
     const [mintedTokens, setMintedTokens] = useState(0)
+    // const [amountValue, setAmount] = useState(0)
+    const [toValue, setTo] = useState("")
+    const [transferFrom, setTransferFrom] = useState("")
+    const [transferTo, setTransferTo] = useState("")
+    const [transferTokenId, setTransferTokenId] = useState("")
 
     const fetchSetPrice = (newPrice) => {
         setTokenPrice(newPrice)
@@ -23,11 +28,18 @@ const WriteList = () => {
             })
     }
 
-    const fetchBuyTokens = (amount, to) => {
-        mintTokensFunc(amount, to)
-            .then(price => setPrice(price))
+    const fetchBuyTokens = (to) => {
+        buyTokensFunc(to)
+            .then(res => console.log(res))
             .catch(e => {
-                setPrice("Error?")
+                console.log(e)
+            })
+    }
+
+    const fetchTransferFrom = (from, to, tokenId) => {
+        transferFromFunc(from, to, tokenId)
+            .then(res => console.log(res))
+            .catch(e => {
                 console.log(e)
             })
     }
@@ -35,9 +47,10 @@ const WriteList = () => {
     return (
         <div className='blocks'>
             <div className='block'>
-                <input type="text"/>
-                <button onClick={() => fetchBuyTokens()}>buyTokens</button>
-                <p></p>
+                {/*<input type="number" onChange={(e) => setAmount(e.target.value)}/>*/}
+                <input type="text" onChange={(e) => setTo(e.target.value)}/>
+                <button onClick={() => fetchBuyTokens(toValue)}>buyTokens</button>
+                <p>{}</p>
             </div>
             <div className='block'>
                 <input type="number" onChange={(e) => setMintedTokens(e.target.value)}/>
@@ -50,8 +63,10 @@ const WriteList = () => {
                 <p>Price: {price}</p>
             </div>
             <div className='block'>
-                <input type="text"/>
-                <button>TransferFrom</button>
+                <input type="text" onChange={(e) => setTransferFrom(e.target.value)}/>
+                <input type="text" onChange={(e) => setTransferTo(e.target.value)}/>
+                <input type="text" onChange={(e) => setTransferTokenId(e.target.value)}/>
+                <button onClick={() => fetchTransferFrom(transferFrom, transferTo, transferTokenId)}>TransferFrom</button>
                 <p></p>
             </div>
         </div>
