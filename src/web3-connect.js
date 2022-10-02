@@ -32,11 +32,7 @@ export const getBalance = async (address) => {
     if (!initialized) {
         await connect()
     }
-    contract = new web3.eth.Contract(
-        abi,
-        address
-    )
-    return contract.methods.balanceOf(account).call()
+    return contract.methods.balanceOf(address).call()
 }
 
 export const getOwner = async (id) => {
